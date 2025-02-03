@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% for book in Books %}
+    <div class="book">
+        <div class="date">
+            {{ book.publishing }}
+        </div>
+        <h1><a href="{% url 'book_detail' pk=post.pk %}">{{ book.title }}</a></h1>
+        <p>{{ book.title|linebreaksbr }}</p>
+    </div>
+{% endfor %}    
