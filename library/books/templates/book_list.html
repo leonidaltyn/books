@@ -1,10 +1,25 @@
 {% extends 'base.html' %}
-{% for book in Books %}
-    <div class="book">
-        <div class="date">
-            {{ book.publishing }}
-        </div>
-        <h1><a href="{% url 'book_detail' pk=post.pk %}">{{ book.title }}</a></h1>
-        <p>{{ book.title|linebreaksbr }}</p>
-    </div>
-{% endfor %}    
+
+{% block content %}
+    <h2>Список книг</h2>
+
+    {% if books %}
+        {% for book in books %}
+            <div class="book">
+                <div class="date">
+                    Дата публикации: {{ book.publishing }}
+                </div>
+                <h3>
+                    <a href="{% url 'book_detail' pk=book.pk %}">{{ book.title }}</a>
+                </h3>
+                <p><strong>Автор:</strong> {{ book.author }}</p>
+                <p>{{ book.description|linebreaksbr }}</p>
+                <hr>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Книг пока нет.</p>
+    {% endif %}
+
+    <a href="{% url 'book_new' %}" class="btn btn-primary">Добавить книгу</a>
+{% endblock %}

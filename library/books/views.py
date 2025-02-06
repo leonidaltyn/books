@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 from .models import Books
@@ -6,7 +7,9 @@ from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect
 
 def book_list(request):
-    books = Books.objects.filter(publishing__lte=timezone.now()).order_by('publishing')
+    books = Books.objects.all()
+    print(books)
+    # return JsonResponse({'books': list(books.values())})
     return render(request, 'C:\\Users\\altna\\OneDrive\\Рабочий стол\\django project library\\books\\library\\books\\templates\\book_list.html', {'books': books})
 def book_new(request):
     if request.method =="POST":
