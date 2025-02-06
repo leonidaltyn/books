@@ -3,10 +3,11 @@ from django.utils import timezone
 from .models import Books
 from .forms import BookForm
 from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect
 
 def book_list(request):
-    books=Books.objects.filter(publishing_Ite=timezone.now()).order_by('publishing')
-    return render(request, 'templates/book_liset.html', {'books': books})
+    books = Books.objects.filter(publishing__lte=timezone.now()).order_by('publishing')
+    return render(request, 'C:\\Users\\altna\\OneDrive\\Рабочий стол\\django project library\\books\\library\\books\\templates\\book_list.html', {'books': books})
 def book_new(request):
     if request.method =="POST":
         form = BookForm(request.POST)
@@ -15,10 +16,10 @@ def book_new(request):
             book.author=request.user
             book.publishing=timezone.now()
             book.save()
-            return redirect('templates/book_detail.html', pk=book.pk)
+            return redirect('book_detail', pk=book.pk)
     else:
         form=BookForm()
-    return render(request, 'templates/book_edit.html', {'form': form})
+    return render(request, 'C:\\Users\\altna\\OneDrive\\Рабочий стол\\django project library\\books\\library\\books\\templates\\book_edit.html', {'form': form})
 def book_detail(request, pk):
     book = get_object_or_404(Books, pk=pk)
-    return render(request, 'templates\book_detail.html', {'book': book})
+    return render(request, 'C:\\Users\\altna\\OneDrive\\Рабочий стол\\django project library\\books\\library\\books\\templates\\book_detail.html', {'book': book})
